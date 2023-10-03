@@ -53,7 +53,9 @@ if __name__ == "__main__":
             print(HELPER_STR)
         elif command == "aggiungi":
             print(add_product(vegan_market))
+            
         elif command == "elenca":
+            print(vegan_market)
             pass
         elif command == "vendita":
             pass
