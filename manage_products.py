@@ -44,10 +44,8 @@ def sell_product(vegan_market : VeganMarket):
     if not vegan_market.is_in_store(product):
         return "Errore! Prodotto non presente in magazzino!"
     try:
-        cart = vegan_market.add_to_cart(product, quantity)
-    
+        cart = vegan_market.get(product, quantity)
+        print (cart)
     except ValueError as e:
         print(e)
         return 
-    
-    pass

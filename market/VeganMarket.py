@@ -22,18 +22,21 @@ class VeganMarket():
         with open(self._market, "w", encoding='utf-8') as mrkt:
             json.dump(market_dict, mrkt, indent=6)
                         
-    def _update_store(self, market_products):
+    def _update_store(self, market_products, product = "" ):
+        if product and market_products["products"][product]["quantity"] == 0:
+            market_products["products"].pop(product)
+            
         with open(self._market, "w", encoding='utf-8') as mrkt:
                 json.dump(market_products, mrkt, indent=6)
     
     def _is_store_available(self):
         if not path.isfile(self._market):
-            print("Il contenuto del magazzino non è attualmente disponibile")
             return False
         return True
     
     def _show_store(self):
         if not self._is_store_available():
+            print("Il contenuto del magazzino non è attualmente disponibile")
             return None
         
         with open(self._market, "r", encoding='utf-8') as mrkt:
@@ -49,6 +52,7 @@ class VeganMarket():
     
     def is_in_store(self, product):
         if not self._is_store_available():
+            print("Il contenuto del magazzino non è attualmente disponibile")
             return False
         mrkt = open(self._market, "r", encoding='utf-8')
         market_dict = json.load(mrkt)
@@ -75,7 +79,28 @@ class VeganMarket():
             self._update_store(market_products)
             
         return { product: market_products["products"][product] }
-            
+    
+    def get(self, product, quantity):
+        if not self._is_store_available():
+            print("Il contenuto del magazzino non è attualmente disponibile")
+            return None
+        with open(self._market, "r", encoding='utf-8') as mrkt:
+                market_products = json.load(mrkt)
+        available_items = market_products["products"][product]["quantity"]
+        
+        if quantity > available_items:
+            print(f"La quantità di prodotto richiesta non è disponibile. Rimangono {available_items} {product}")
+            return None
+        
+        required_product = market_products["products"][product].copy()
+        required_product.pop("buy")
+        
+        market_products["products"][product]["quantity"] -= quantity       
+        self._update_store(market_products, product=product)
+                
+        return {product : required_product}      
+    
+    
     def sell(self, product):
         pass        
     def profits(self):
@@ -86,9 +111,6 @@ class VeganMarket():
         if not store_content:
             return "Magazzino vuoto o inaccessibile."
         return store_content
-
-#TODO TRADURRE IN INGLESE TUTTI GLI ERRORI!! LA CLASSE DEVE ESSERE GENERICA!!!
-
 
 '''
 with open(self._market, "r", encoding='utf-8') as mrkt:
