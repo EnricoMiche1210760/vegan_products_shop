@@ -148,10 +148,3 @@ chiudi: esci dal programma
 
 Inserisci un comando: chiudi
 Bye bye
-
-Ricorda Sempre
-Nel lavoro è fondamentale seguire sempre le specifiche che ci vengono date alla lettera, quindi il programma deve contenere esattamente le funzioni specificate e deve produrre esattamente l'output dell'esempio se riceve lo stesso input.
-Una funzione deve fare una e una cosa sola, cerca di scrivere funzioni brevi e concise, se una funzione è troppo lunga è molto probabile che vada spezzata in più funzioni. Approfondimento 1 Approfondimento 2
-Sentirai spesso dire che è sempre necessario commentare il codice, falso! Un codice ben scritto si commenta da solo, non usare i commenti per descrivere quello che stai facendo, deve essere chiaro dal codice. Approfondimento 1 Approdondimento 2
-Utilizza le docstrings per documentare funzioni, classi e metodi.
-I nomi di variabili, funzioni e metodi vanno sempre scritti in inglese, utilizzando lo snake case, il camel case va usato solo per i nomi di classi. Non mischiare italiano e inglese, sempre è solo inglese. Approfondimento 1
