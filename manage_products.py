@@ -10,7 +10,7 @@ def get_product_info():
     return [product, quantity]
 
 
-def add_product(vegan_market):
+def add_product(vegan_market : VeganMarket):
     product_info = get_product_info()
     if not product_info:
         return "Impossibile inserire la quantità desiderata."
@@ -34,7 +34,7 @@ def add_product(vegan_market):
     return "Impossibile aggiungere il prodotto"
 
 
-def sell_product(vegan_market):
+def sell_product(vegan_market : VeganMarket):
     product_info = get_product_info()
     if not product_info:
         return "Impossibile inserire la quantità desiderata."
