@@ -12,10 +12,13 @@ class VeganMarket():
         
         if not path.isfile(self._market):
             market_dict = {"products": {}}
-            
             with open(self._market, "w", encoding='utf-8') as mrkt:
                 json.dump(market_dict, mrkt, indent=6)
-        
+                
+    def _update_market(self, market_products):
+        with open(self._market, "w", encoding='utf-8') as mrkt:
+                json.dump(market_products, mrkt, indent=6)
+    
     def is_in_store(self, product):
         try:
             mrkt = open(self._market, "r", encoding='utf-8')
@@ -23,17 +26,23 @@ class VeganMarket():
             print("Il contenuto del magazzino non è attualmente disponibile")
             return False
         market_dict = json.load(mrkt)
-        if product in market_dict.keys():
+        mrkt.close()
+        
+        if product in market_dict["products"].keys():
             return True
         return False
         
     def add(self, product, quantity=1, price=()):
+        with open(self._market, "r", encoding='utf-8') as mrkt:
+                market_products = json.load(mrkt)
         if not price:
-            return
+            market_products["products"][product]["quantity"] += quantity
+            self._update_market(market_products)
         else:
-            #with open(self._market, "w+", encoding='utf-8') as mrkt:
-            #    mmrkt
-            return   
+            market_products["products"][product] = {"quantity":quantity, "buy":price[0], "sell":price[1]}
+            self._update_market(market_products)
+            
+        return   
     def get(self, product):
         pass
     def sell(self, product):
