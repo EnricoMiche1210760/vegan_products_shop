@@ -10,19 +10,26 @@ aiuto: mostra i possibili comandi
 chiudi: esci dal programma
 """
 
-def add_product(vegan_market):
+def get_product_info():
     product = input("Nome del prodotto: ")
     try:
         quantity = int(input("Quantità: "))
     except ValueError as e:
         print(e)
+        return None
+    
+    return [product, quantity]
+
+
+def add_product(vegan_market):
+    product_info = get_product_info()
+    if not product_info:
         return "Impossibile inserire la quantità desiderata."
     
-    feedback_str = f"AGGIUNTO: {quantity} X {product}"
-    if vegan_market.is_in_store(product):
-        vegan_market.add(product, quantity)
-        return feedback_str
-    
+    feedback_str = f"AGGIUNTO: {product_info[1]} X {product_info[0]}"
+    if vegan_market.is_in_store(product_info[0]):
+        if vegan_market.add(product_info[0], product_info[1]):
+            return feedback_str
     try:
         buy_price = float(input("Prezzo di acquisto: "))
         sell_price = float(input("Prezzo di vendita: "))
@@ -30,8 +37,17 @@ def add_product(vegan_market):
         print(e)
         return "Il prezzo inserito non è corretto"
     
-    vegan_market.add(product, quantity, (buy_price, sell_price))
-    return feedback_str
+    if vegan_market.add(product_info[0], product_info[1], (buy_price, sell_price)):
+        return feedback_str
+    return "Impossibile aggiungere il prodotto"
+
+def sell_product(vegan_market):
+    product_info = get_product_info()
+    if not product_info:
+        return "Impossibile inserire la quantità desiderata."
+    pass
+
+
 
 if __name__ == "__main__":
     vegan_market = VeganMarket("vegan_market.json")
@@ -58,6 +74,7 @@ if __name__ == "__main__":
             print(vegan_market)
             pass
         elif command == "vendita":
+            print(sell_product(vegan_market))
             pass
         elif command == "profitti":
             pass
