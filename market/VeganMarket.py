@@ -38,7 +38,6 @@ class VeganMarket():
         
         with open(self._market, "r", encoding='utf-8') as mrkt:
            market_dict = json.load(mrkt)
-        print(market_dict)   
         return market_dict
     
     def _show_store(self):
