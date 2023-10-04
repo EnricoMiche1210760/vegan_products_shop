@@ -74,6 +74,9 @@ class VeganMarket():
         if not price:
             market_products["products"][product]["quantity"] += quantity
             self._update_store(market_products)
+        elif price[0] <= 0 or price[1] <= 0:
+            print("Error! Buy or sell price are not correct! Product has not be stored")
+            return None
         else:
             market_products["products"][product] = {"quantity":quantity, "buy":price[0], "sell":price[1]}
             self._update_store(market_products)
@@ -91,14 +94,16 @@ class VeganMarket():
         if quantity > available_items:
             print(f"La quantità di prodotto richiesta non è disponibile. Rimangono {available_items} {product}")
             return None
-        
+        print(market_products)
         required_product = market_products["products"][product].copy()
+        required_product["quantity"] = quantity
         required_product.pop("buy")
+        print(required_product)
         
         market_products["products"][product]["quantity"] -= quantity       
         self._update_store(market_products, product=product)
                 
-        return {product : required_product}      
+        return required_product      
     
     
     def sell(self, product):

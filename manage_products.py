@@ -35,17 +35,27 @@ def add_product(vegan_market : VeganMarket):
 
 
 def sell_product(vegan_market : VeganMarket):
-    product_info = get_product_info()
-    if not product_info:
-        return "Impossibile inserire la quantità desiderata."
-    product = product_info[0]
-    quantity = product_info[1]
-    
-    if not vegan_market.is_in_store(product):
-        return "Errore! Prodotto non presente in magazzino!"
-    try:
-        cart = vegan_market.get(product, quantity)
-        print (cart)
-    except ValueError as e:
-        print(e)
-        return 
+    cart = {}
+    while 1:
+        product_info = get_product_info()
+        if not product_info:
+            return "Impossibile inserire la quantità desiderata."
+        product = product_info[0]
+        quantity = product_info[1]
+        
+        if not vegan_market.is_in_store(product):
+            print( "Errore! Prodotto non presente in magazzino!")
+        try:
+            get_product = vegan_market.get(product, quantity)
+            print(get_product)
+            if get_product is not None:
+                cart[product] = get_product.copy()
+            print (cart)
+        except ValueError as e:
+            print(e)
+        finally:
+            buy_more = input("Aggiungere un altro prodotto ? (si/no) ")
+            if buy_more.lower() == "si" or buy_more.lower() == "sì":
+                continue
+            else:
+                break     
