@@ -1,5 +1,5 @@
 from market import VeganMarket
-from manage_products import add_product, sell_product
+from manage_products import add_product_to_store, sell_products
 
 HELPER_STR="""
 I comandi disponibili sono i seguenti:
@@ -31,13 +31,13 @@ if __name__ == "__main__":
         if command == "aiuto":
             print(HELPER_STR)
         elif command == "aggiungi":
-            print(add_product(vegan_market))
+            print(add_product_to_store(vegan_market))
             
         elif command == "elenca":
             print(vegan_market)
             pass
         elif command == "vendita":
-            print(sell_product(vegan_market))
+            print(sell_products(vegan_market))
             pass
         elif command == "profitti":
             pass

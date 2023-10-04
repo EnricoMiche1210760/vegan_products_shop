@@ -1,5 +1,29 @@
 from market import VeganMarket
 
+def _sell_product(vegan_market : VeganMarket, product_info, cart):
+    
+    product = product_info[0]
+    quantity = product_info[1]
+    
+    if vegan_market.is_in_store(product):
+        try:
+            get_product = vegan_market.get(product, quantity)
+            if get_product is not None:
+                if product not in cart:
+                    cart[product] = get_product.copy()
+                else:
+                    cart[product]["quantity"] += quantity
+            print(cart)
+        except ValueError as e:
+            print(e)
+    else:
+        print( "Errore! Prodotto non presente in magazzino!")  
+    return cart    
+
+def _get_bill(cart):
+    pass
+
+
 def get_product_info():
     product = input("Nome del prodotto: ")
     try:
@@ -10,7 +34,7 @@ def get_product_info():
     return [product, quantity]
 
 
-def add_product(vegan_market : VeganMarket):
+def add_product_to_store(vegan_market : VeganMarket):
     product_info = get_product_info()
     if not product_info:
         return "Impossibile inserire la quantità desiderata."
@@ -33,29 +57,20 @@ def add_product(vegan_market : VeganMarket):
         return feedback_str
     return "Impossibile aggiungere il prodotto"
 
-
-def sell_product(vegan_market : VeganMarket):
+def sell_products(vegan_market : VeganMarket): 
     cart = {}
     while 1:
         product_info = get_product_info()
         if not product_info:
-            return "Impossibile inserire la quantità desiderata."
-        product = product_info[0]
-        quantity = product_info[1]
+            print( "Impossibile inserire la quantità desiderata.")
+        else:
+            _sell_product(vegan_market, product_info, cart)
+
+        buy_more = input("Aggiungere un altro prodotto ? (si/no) ")
+        if buy_more.lower() == "si" or buy_more.lower() == "sì":
+            continue
+        else:
+            break 
+    return _get_bill(cart)
+      
         
-        if not vegan_market.is_in_store(product):
-            print( "Errore! Prodotto non presente in magazzino!")
-        try:
-            get_product = vegan_market.get(product, quantity)
-            print(get_product)
-            if get_product is not None:
-                cart[product] = get_product.copy()
-            print (cart)
-        except ValueError as e:
-            print(e)
-        finally:
-            buy_more = input("Aggiungere un altro prodotto ? (si/no) ")
-            if buy_more.lower() == "si" or buy_more.lower() == "sì":
-                continue
-            else:
-                break     
