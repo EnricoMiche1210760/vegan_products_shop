@@ -1,6 +1,6 @@
-from market import VeganMarket
+from market import Stock
 
-def _sell_product(vegan_market : VeganMarket, product_info, cart):
+def _sell_product(vegan_market : Stock, product_info, cart):
     
     product = product_info[0]
     quantity = product_info[1]
@@ -34,7 +34,7 @@ def get_product_info():
     return [product, quantity]
 
 
-def add_product_to_store(vegan_market : VeganMarket):
+def add_product_to_store(vegan_market : Stock):
     product_info = get_product_info()
     if not product_info:
         return "Impossibile inserire la quantità desiderata."
@@ -57,7 +57,7 @@ def add_product_to_store(vegan_market : VeganMarket):
         return feedback_str
     return "Impossibile aggiungere il prodotto"
 
-def sell_products(vegan_market : VeganMarket): 
+def sell_products(vegan_market : Stock): 
     cart = {}
     while 1:
         product_info = get_product_info()

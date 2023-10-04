@@ -1,1 +1,1 @@
-from .VeganMarket import *
+from .Stock import *

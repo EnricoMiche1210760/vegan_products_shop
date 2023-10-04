@@ -1,4 +1,4 @@
-from market import VeganMarket
+from market import Stock
 from manage_products import add_product_to_store, sell_products
 
 HELPER_STR="""
@@ -13,7 +13,7 @@ chiudi: esci dal programma
 
 if __name__ == "__main__":
     
-    vegan_market = VeganMarket("vegan_market.json")
+    vegan_market = Stock("vegan_market.json")
     print(vegan_market._market)
     
     '''
