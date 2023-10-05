@@ -1,0 +1,1 @@
+from .FatalErrorException import *

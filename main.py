@@ -1,4 +1,4 @@
-from market import VeganMarket
+from market import Stock, Sell, VeganMarket
 from manage_products import add_product_to_store, sell_products
 
 HELPER_STR="""
@@ -11,36 +11,28 @@ aiuto: mostra i possibili comandi
 chiudi: esci dal programma
 """
 
-if __name__ == "__main__":
-    
-    vegan_market = VeganMarket("vegan_market.json")
-    print(vegan_market._market)
-    
-    '''
-    Inserisci un comando: aiuto
-    I comandi disponibili sono i seguenti:
-    aggiungi: aggiungi un prodotto al magazzino
-    elenca: elenca i prodotto in magazzino
-    vendita: registra una vendita effettuata
-    profitti: mostra i profitti totali
-    aiuto: mostra i possibili comandi
-    chiudi: esci dal programma  
-    '''
+if __name__ == "__main__":   
     while 1:
         command = input("Inserisci un comando: ")
         if command == "aiuto":
             print(HELPER_STR)
         elif command == "aggiungi":
-            print(add_product_to_store(vegan_market))
+            stock = Stock("vegan_market.json")
+            print(stock._market)
+            print(add_product_to_store(stock))
             
         elif command == "elenca":
+            vegan_market = VeganMarket("vegan_market.json")
             print(vegan_market)
-            pass
+            
         elif command == "vendita":
-            print(sell_products(vegan_market))
-            pass
+            cart = Sell("vegan_market.json") 
+            print(sell_products(cart))
+            
         elif command == "profitti":
-            pass
+            profits = VeganMarket("vegan_market.json")
+            profits.print_profits()
+
         elif command == "chiudi":
             print("Bye bye")
             break
