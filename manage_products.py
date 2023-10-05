@@ -18,11 +18,6 @@ def _sell_product(vegan_market : Sell, product_info, cart):
             print(e)
     else:
         print( "Errore! Prodotto non presente in magazzino!")  
-    #return cart    
-
-#def _get_bill(cart):
- #   pass
-
 
 def get_product_info():
     product = input("Nome del prodotto: ")
@@ -43,17 +38,7 @@ def add_product_to_store(vegan_market : Stock):
     
     
     feedback_str = f"AGGIUNTO: {quantity} X {product}"
-    if vegan_market.is_in_store(product):
-        if vegan_market.add(product, quantity):
-            return feedback_str
-    try:
-        buy_price = float(input("Prezzo di acquisto: "))
-        sell_price = float(input("Prezzo di vendita: "))
-    except Exception as e:
-        print(e)
-        return "Il prezzo inserito non è corretto"
-    
-    if vegan_market.add(product, quantity, (buy_price, sell_price)):
+    if vegan_market.add(product, quantity):
         return feedback_str
     return "Impossibile aggiungere il prodotto"
 

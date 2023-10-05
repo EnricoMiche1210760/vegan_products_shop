@@ -7,23 +7,20 @@ class VeganMarket():
         market: file json contenente tutti i prodotti presenti nel market
         '''
         self._market = market
-        #self._market_dir = {}
-        #self._gross_profit = 0
-        #self._net_profit = 0
-
         assert path.splitext(self._market)[-1] == ".json", "Tipo di file non supportato. Utilizzare un file json"
         
     def _create_store(self):    
         market_dict = {"products": {}, 
                         "profits":{
-                            "gross": self._gross_profit,
-                            "net": self._net_profit
+                            "gross": 0,
+                            "net": 0
                         }
                         }
-        with open(self._market, "w", encoding='utf-8') as mrkt:
-            json.dump(market_dict, mrkt, indent=6)
+        
+        self._save_store(market_dict)
+        return market_dict
     
-    def _save_store(self, market_dict, product = ""):
+    def _save_store(self, market_dict):
         with open(self._market, "w", encoding='utf-8') as mrkt:
                 json.dump(market_dict, mrkt, indent=6)
         
@@ -34,7 +31,7 @@ class VeganMarket():
     
     def _load(self, market_dict={}):
         if not self._is_store_available():
-            return None
+            return {}
         
         with open(self._market, "r", encoding='utf-8') as mrkt:
            market_dict = json.load(mrkt)
@@ -51,7 +48,7 @@ class VeganMarket():
         for product in market_dict["products"]:
             quantity = market_dict["products"][product]["quantity"]
             sell_price = market_dict["products"][product]["sell"]           
-            products_table_info += "{:<20} {:<15} {:<15}\n".format(product, quantity, sell_price)
+            products_table_info += "{:<20} {:<15} €{:<15.2f}\n".format(product, quantity, sell_price)
             
         return products_table_info 
        
@@ -60,26 +57,9 @@ class VeganMarket():
         if not store_content:
             return "Magazzino vuoto o inaccessibile."
         return store_content    
-        
-        
-    #def _update_profits(self, product, quantity):
-        
-        
-  
     
-'''   
-    def is_in_store(self, product):
-        if not self._is_store_available():
-            print("Il contenuto del magazzino non è attualmente disponibile")
-            return False
-        
-        if product.lower() in self._market_dir["products"].keys():
-            return True
-        return False
-'''
-'''
-with open(self._market, "r", encoding='utf-8') as mrkt:
-                market_dict = json.load(mrkt)
-            self._gross_profit = market_dict["profits"]["gross"]
-            self._net_profit = market_dict["profits"]["net"]
-'''
+    def print_profits(self):
+        market_dict = self._load()
+        print (f"Profitto: lordo=€{market_dict['profits']['gross']} netto=€{market_dict['profits']['net']}")
+        return
+       
