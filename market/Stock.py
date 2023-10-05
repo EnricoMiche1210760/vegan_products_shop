@@ -1,5 +1,5 @@
 from .VeganMarket import *
-from .market_exception import FatalErrorException
+from .exceptions import FatalErrorException, ProductNotFoundException
 
 
 class Stock(VeganMarket):   
@@ -11,22 +11,11 @@ class Stock(VeganMarket):
     def _load_from_store(self):
         return super()._load(self._market_dict)
     
-    def _add_new_product(self, product, quantity):
-        try:
-            buy_price = float(input("Prezzo di acquisto: "))
-            sell_price = float(input("Prezzo di vendita: "))
-        except Exception as e:
-            print(e)
-            return None
-        finally:
-            if buy_price <= 0 or sell_price <= 0:
-                print("Error! Buy or sell price are not correct! Product has not be stored")
-                return None
-            else:
-                self._market_dict["products"][product] = {"quantity":quantity, "buy":buy_price, "sell":sell_price}
-            return [buy_price, sell_price]
+    def _add_new_product(self, product, quantity, buy_price, sell_price):
+        self._market_dict["products"][product] = {"quantity":quantity, "buy":buy_price, "sell":sell_price}
+        return [buy_price, sell_price]
         
-    def add(self, product, quantity=1):
+    def add(self, product, quantity=1, buy_price=-1, sell_price=-1):
         product = product.lower()
         self._market_dict = self._load_from_store()    
         
@@ -38,8 +27,12 @@ class Stock(VeganMarket):
         
         if product in self._market_dict["products"]:    
             self._market_dict["products"][product]["quantity"] += quantity
-        elif not self._add_new_product(product, quantity):
-            return None   
+            
+        elif buy_price == -1 and sell_price == -1:
+            raise ProductNotFoundException(product)
+        else: 
+            self._add_new_product(product, quantity, buy_price, sell_price)
+        
         super()._save_store(dict(self._market_dict))
             
         return { product: self._market_dict["products"][product] } 
