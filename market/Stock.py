@@ -1,4 +1,6 @@
 from .VeganMarket import *
+from market_exception import FatalErrorException
+
 
 class Stock(VeganMarket):   
     
@@ -13,8 +15,8 @@ class Stock(VeganMarket):
         product = product.lower()
         self._market_dict = self._load_from_store()    
         
-        #if len(self._market_dict) == 0:
-        #    raise FatalError
+        if len(self._market_dict) == 0:
+            raise FatalErrorException(self._market_dict)
         
         assert type(quantity) is int, f"quantity must be int. Got {type(quantity)}"
         assert quantity >= 0, f"quantity must be a positive number. Got quantity={quantity}"        

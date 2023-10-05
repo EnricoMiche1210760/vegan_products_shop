@@ -1,6 +1,6 @@
-from market import Stock
+from market import Stock, Sell
 
-def _sell_product(vegan_market : Stock, product_info, cart):
+def _sell_product(vegan_market : Sell, product_info, cart):
     
     product = product_info[0]
     quantity = product_info[1]
@@ -18,10 +18,10 @@ def _sell_product(vegan_market : Stock, product_info, cart):
             print(e)
     else:
         print( "Errore! Prodotto non presente in magazzino!")  
-    return cart    
+    #return cart    
 
-def _get_bill(cart):
-    pass
+#def _get_bill(cart):
+ #   pass
 
 
 def get_product_info():
@@ -57,20 +57,20 @@ def add_product_to_store(vegan_market : Stock):
         return feedback_str
     return "Impossibile aggiungere il prodotto"
 
-def sell_products(vegan_market : Stock): 
-    cart = {}
+def sell_products(cart : Sell): 
+    buy_list = {}
     while 1:
         product_info = get_product_info()
         if not product_info:
             print( "Impossibile inserire la quantità desiderata.")
         else:
-            _sell_product(vegan_market, product_info, cart)
+            _sell_product(cart, product_info, buy_list)
 
         buy_more = input("Aggiungere un altro prodotto ? (si/no) ")
         if buy_more.lower() == "si" or buy_more.lower() == "sì":
             continue
         else:
             break 
-    return _get_bill(cart)
+    return cart.get_bill(buy_list)
       
         

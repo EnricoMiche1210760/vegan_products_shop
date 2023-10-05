@@ -62,11 +62,8 @@ class VeganMarket():
         return store_content    
         
         
-    def _update_profits(self, product, quantity):
-        self._gross_profit += (self._market_dir["products"][product]["sell"]*quantity)
-        self._net_profit = self._gross_profit - (self._market_dir["products"][product]["buy"]*quantity)
-        self._market_dir["profits"]["gross"] = self._gross_profit
-        self._market_dir["profits"]["net"] = self._net_profit
+    #def _update_profits(self, product, quantity):
+        
         
   
     

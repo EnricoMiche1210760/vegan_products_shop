@@ -1,4 +1,4 @@
-from market import Stock
+from market import Stock, Sell
 from manage_products import add_product_to_store, sell_products
 
 HELPER_STR="""
@@ -12,9 +12,6 @@ chiudi: esci dal programma
 """
 
 if __name__ == "__main__":
-    
-    vegan_market = Stock("vegan_market.json")
-    print(vegan_market._market)
     
     '''
     Inserisci un comando: aiuto
@@ -31,13 +28,17 @@ if __name__ == "__main__":
         if command == "aiuto":
             print(HELPER_STR)
         elif command == "aggiungi":
-            print(add_product_to_store(vegan_market))
+            stock = Stock("vegan_market.json")
+            print(stock._market)
+            print(add_product_to_store(stock))
             
         elif command == "elenca":
             print(vegan_market)
             pass
         elif command == "vendita":
-            print(sell_products(vegan_market))
+            cart = Sell("vegan_market.json") 
+            print(sell_products(cart))
+            
             pass
         elif command == "profitti":
             pass
