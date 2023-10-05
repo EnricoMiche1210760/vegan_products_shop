@@ -1,5 +1,5 @@
 from .VeganMarket import *
-from .market_exception import FatalErrorException
+from .exceptions import FatalErrorException
 
 class Sell(VeganMarket):
     

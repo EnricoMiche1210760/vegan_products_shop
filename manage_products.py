@@ -36,11 +36,19 @@ def add_product_to_store(vegan_market : Stock):
     product = product_info[0]
     quantity = product_info[1]
     
+    try:
+        vegan_market.add(product, quantity)
+    except Exception as e:
+        try:
+            buy_price = float(input("Prezzo di acquisto: "))
+            sell_price = float(input("Prezzo di vendita: "))
+            vegan_market.add(product, quantity, buy_price, sell_price)
+        except ValueError as error:
+            print(error)
+            return "Impossibile aggiungere il prodotto"
     
-    feedback_str = f"AGGIUNTO: {quantity} X {product}"
-    if vegan_market.add(product, quantity):
-        return feedback_str
-    return "Impossibile aggiungere il prodotto"
+    feedback_string = f"AGGIUNTO: {quantity} X {product}"        
+    return feedback_string
 
 def sell_products(cart : Sell): 
     buy_list = {}
