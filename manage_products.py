@@ -5,17 +5,20 @@ def _sell_product(vegan_market : Sell, product_info, cart):
     product = product_info[0]
     quantity = product_info[1]
     
-    if vegan_market.is_in_store(product):
-        try:
-            get_product = vegan_market.get(product, quantity)
-            if get_product is not None:
-                if product not in cart:
-                    cart[product] = get_product.copy()
-                else:
-                    cart[product]["quantity"] += quantity
-            print(cart)
-        except ValueError as e:
-            print(e)
+    try:
+        if vegan_market.is_in_store(product):
+            try:
+                get_product = vegan_market.get(product, quantity)
+                if get_product is not None:
+                    if product not in cart:
+                        cart[product] = get_product.copy()
+                    else:
+                        cart[product]["quantity"] += quantity
+                print(cart)
+            except ValueError as e:
+                print(e)
+    except Exception as e:
+        print(e)
     else:
         print( "Errore! Prodotto non presente in magazzino!")  
 

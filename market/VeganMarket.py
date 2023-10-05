@@ -60,6 +60,9 @@ class VeganMarket():
     
     def print_profits(self):
         market_dict = self._load()
-        print (f"Profitto: lordo=€{market_dict['profits']['gross']} netto=€{market_dict['profits']['net']}")
+        if len(market_dict) == 0:
+            print("Impossibile ottenere i profitti!")
+            return
+        print(f"Profitto: lordo=€{market_dict['profits']['gross']} netto=€{market_dict['profits']['net']}")
         return
        
