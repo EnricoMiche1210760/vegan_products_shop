@@ -20,7 +20,7 @@ def _sell_product(vegan_market : Sell, product_info, cart):
     except Exception as e:
         print(e)
     else:
-        print( "Errore! Prodotto non presente in magazzino!")  
+        print( "Errore! Prodotto non presente in negozio!")  
 
 def get_product_info():
     product = input("Nome del prodotto: ")

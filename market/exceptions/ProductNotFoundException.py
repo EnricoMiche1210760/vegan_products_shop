@@ -1,11 +1,12 @@
 class ProductNotFoundException(Exception):
-    """
-    Exception raised when inserting a new product without sell and buy price.
-    Attributes:
-        dict_var (dict): input dictionary which caused the error
-        message (str): explanation of the error
-    """
-    def __init__(self, product, message="A new product require to specify the buy and sell price."):
-        self.dict_var = product
+    '''
+    Eccezione generata quando inserisco un nuovo prodotto nel dizionario senza specificarne il prezzo
+    product (str): prodotto che ha causato l'eccezione
+    dict_var (dict): dizionario
+    message (str): spiegazione dell'errore
+    '''
+    def __init__(self, product, dict_var, message="A new product require to specify the buy and sell price."):
+        self.product = product
+        self.dict_var = dict_var
         self.message = message
         super().__init__(self.message)

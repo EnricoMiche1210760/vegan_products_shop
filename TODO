@@ -2,4 +2,3 @@
 
 #TODO controllare che il prezzo di acquisto e vendita del prodotto siano > 0
 #TODO gestione eccezioni generate da me.
-#TODO vedere se togliere gross e net profit

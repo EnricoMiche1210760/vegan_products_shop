@@ -1,11 +1,10 @@
 class FatalErrorException(Exception):
-    """
-    Exception raised for errors in the input salary.
-    Attributes:
-        dict_var (dict): input dictionary which caused the error
-        message (str): explanation of the error
-    """
-    def __init__(self, dict_var, message="Unable to load store data."):
+    '''
+    Eccezione generata quando il dizionario è vuoto
+    dict_var (dict): dizionario che ha causato l'errore
+    message (str): spiegazione dell'errore
+    '''
+    def __init__(self, dict_var, message="Impossibile ottenere i dati del negozio."):
         self.dict_var = dict_var
         self.message = message
         super().__init__(self.message)
