@@ -20,25 +20,25 @@ chiudi: esci dal programma
 if __name__ == "__main__":   
     while 1:
         command = input("Inserisci un comando: ")
-        if command == "aiuto":
+        if command.lower() == "aiuto":
             print(HELPER_STR)
-        elif command == "aggiungi":
+        elif command.lower() == "aggiungi":
             stock = Stock("vegan_shop.json")
             print(add_product_to_store(stock))
             
-        elif command == "elenca":
+        elif command.lower() == "elenca":
             vegan_shop = VeganShop("vegan_shop.json")
             print(vegan_shop)
             
-        elif command == "vendita":
+        elif command.lower() == "vendita":
             cart = Sell("vegan_shop.json") 
             print(sell_products(cart))
             
-        elif command == "profitti":
+        elif command.lower() == "profitti":
             profits = VeganShop("vegan_shop.json")
             profits.print_profits()
 
-        elif command == "chiudi":
+        elif command.lower() == "chiudi":
             print("Bye bye")
             break
         else:

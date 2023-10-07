@@ -75,11 +75,13 @@ class Sell(VeganShop):
         
         if type(quantity) is not int:
             raise ValueError( f"La quantità deve essere di tipo int. Ricevuto {type(quantity)}")
-        if quantity < 0: 
-            raise ValueError(f"La quantità deve essere un numero negativo. Ricevuto quantity={quantity}")   
+        if quantity <= 0: 
+            raise ValueError(f"La quantità deve essere un numero positivo. Ricevuto quantity={quantity}")   
         
         self._load_profits_from_store()
-            
+        
+        product = product.lower()
+        
         available_items = self._market_dict["products"][product]["quantity"]
         if quantity > available_items:
             print(f"La quantità di prodotto richiesta non è disponibile. Rimangono {available_items} {product}")

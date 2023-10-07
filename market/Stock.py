@@ -27,6 +27,8 @@ class Stock(VeganShop):
         '''
         if buy_price < 0 or sell_price < 0:
             raise ValueError("Digitato un prezzo errato!")
+        if sell_price < buy_price:
+            raise ValueError("Errore! Prezzo di vendita più basso del prezzo di acquisto")
         self._market_dict["products"][product] = {"quantity":quantity, "buy":round(buy_price, 2), "sell":round(sell_price, 2)}
         return [buy_price, sell_price]
         
@@ -47,8 +49,8 @@ class Stock(VeganShop):
         
         if type(quantity) is not int:
             raise ValueError( f"La quantità deve essere di tipo int. Ricevuto {type(quantity)}")
-        if quantity < 0: 
-            raise ValueError(f"La quantità deve essere un numero negativo. Ricevuto quantity={quantity}")        
+        if quantity <= 0: 
+            raise ValueError(f"La quantità deve essere un numero positivo. Ricevuto quantity={quantity}")        
         
         if product in self._market_dict["products"]:    
             self._market_dict["products"][product]["quantity"] += quantity

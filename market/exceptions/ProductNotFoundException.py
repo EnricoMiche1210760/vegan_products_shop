@@ -5,7 +5,7 @@ class ProductNotFoundException(Exception):
     dict_var (dict): dizionario
     message (str): spiegazione dell'errore
     '''
-    def __init__(self, product, dict_var, message="A new product require to specify the buy and sell price."):
+    def __init__(self, product, dict_var, message="Un nuovo prodotto richiede di specificare il prezzo di vendita e di acquisto"):
         self.product = product
         self.dict_var = dict_var
         self.message = message

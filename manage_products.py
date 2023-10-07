@@ -29,8 +29,8 @@ def _sell_product(vegan_shop : Sell, product_info, cart):
         print(e)
         return "void"
     except Exception as e:
-        print(e)
         return "not added"
+    return "not added"
     
 def get_product_info():
     '''
@@ -60,7 +60,7 @@ def add_product_to_store(vegan_shop : Stock):
     try:
         vegan_shop.add(product, quantity)
     except ValueError as e:
-        print(e)
+        return e
     except ProductNotFoundException as e:
         try:
             buy_price = float(input("Prezzo di acquisto: "))
