@@ -1,7 +1,7 @@
-from .VeganMarket import *
+from .VeganShop import *
 from .exceptions import FatalErrorException
 
-class Sell(VeganMarket):
+class Sell(VeganShop):
     
     def __init__(self, market):
         '''
@@ -72,6 +72,9 @@ class Sell(VeganMarket):
        
         if len(self._market_dict) == 0:
             raise FatalErrorException(self._market_dict)
+        
+        assert type(quantity) is int, f"La quantità deve essere di tipo int. Ricevuto {type(quantity)}"
+        assert quantity >= 0, f"La quantità deve essere un numero negativo. Ricevuto quantity={quantity}"   
         
         self._load_profits_from_store()
             

@@ -1,4 +1,3 @@
-#TODO TRADURRE IN INGLESE TUTTI GLI ERRORI!! LA CLASSE DEVE ESSERE GENERICA!!!
-
 #TODO controllare che il prezzo di acquisto e vendita del prodotto siano > 0
 #TODO gestione eccezioni generate da me.
+#TODO i float richiesti da riga di comando devono avere solo 2 cifre dopo la virgola !!!!

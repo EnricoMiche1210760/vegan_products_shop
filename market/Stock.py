@@ -1,8 +1,8 @@
-from .VeganMarket import *
+from .VeganShop import *
 from .exceptions import FatalErrorException, ProductNotFoundException
 
 
-class Stock(VeganMarket):   
+class Stock(VeganShop):   
     
     def __init__(self, market):
         '''
@@ -43,8 +43,8 @@ class Stock(VeganMarket):
         if len(self._market_dict) == 0:
             self._market_dict = super()._create_store()
         
-        assert type(quantity) is int, f"quantity must be int. Got {type(quantity)}"
-        assert quantity >= 0, f"quantity must be a positive number. Got quantity={quantity}"        
+        assert type(quantity) is int, f"La quantità deve essere di tipo int. Ricevuto {type(quantity)}"
+        assert quantity >= 0, f"La quantità deve essere un numero negativo. Ricevuto quantity={quantity}"        
         
         if product in self._market_dict["products"]:    
             self._market_dict["products"][product]["quantity"] += quantity

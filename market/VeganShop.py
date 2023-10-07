@@ -1,7 +1,7 @@
 import json
 from os import path
 
-class VeganMarket():
+class VeganShop():
     def __init__(self, market):
         '''
         market (str): file json contenente tutti i prodotti presenti nel market
@@ -75,7 +75,7 @@ class VeganMarket():
         '''
         store_content = self._show_store()
         if not store_content:
-            return "negozio vuoto o inaccessibile."
+            return "Negozio vuoto o inaccessibile."
         return store_content    
     
     def print_profits(self):
@@ -86,6 +86,6 @@ class VeganMarket():
         if len(market_dict) == 0:
             print("Impossibile ottenere i profitti del negozio!")
             return
-        print(f"Profitto: lordo=€{market_dict['profits']['gross']} netto=€{market_dict['profits']['net']}")
+        print(f"Profitto: lordo=€{market_dict['profits']['gross']:.2f} netto=€{market_dict['profits']['net']:.2f}")
         return
        

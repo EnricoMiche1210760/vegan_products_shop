@@ -1,4 +1,4 @@
-from market import Stock, Sell, VeganMarket
+from market import Stock, Sell, VeganShop
 from manage_products import add_product_to_store, sell_products
 
 HELPER_STR="""
@@ -11,7 +11,11 @@ aiuto: mostra i possibili comandi
 chiudi: esci dal programma
 """
 
-help(Sell)
+#help(Sell)
+#help(Stock)
+#help(VeganShop)
+#help(add_product_to_store)
+#help(sell_products)
 
 if __name__ == "__main__":   
     while 1:
@@ -19,20 +23,19 @@ if __name__ == "__main__":
         if command == "aiuto":
             print(HELPER_STR)
         elif command == "aggiungi":
-            stock = Stock("vegan_market.json")
-            print(stock._market)
+            stock = Stock("vegan_shop.json")
             print(add_product_to_store(stock))
             
         elif command == "elenca":
-            vegan_market = VeganMarket("vegan_market.json")
-            print(vegan_market)
+            vegan_shop = VeganShop("vegan_shop.json")
+            print(vegan_shop)
             
         elif command == "vendita":
-            cart = Sell("vegan_market.json") 
+            cart = Sell("vegan_shop.json") 
             print(sell_products(cart))
             
         elif command == "profitti":
-            profits = VeganMarket("vegan_market.json")
+            profits = VeganShop("vegan_shop.json")
             profits.print_profits()
 
         elif command == "chiudi":
