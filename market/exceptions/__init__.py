@@ -1,3 +1,3 @@
-from .FatalErrorException import *
+from .EmptyShopException import *
 from .ProductNotFoundException import *
 

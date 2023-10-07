@@ -1,5 +1,5 @@
 from market import Stock, Sell
-
+from market.exceptions import ProductNotFoundException, EmptyShopException
 def _sell_product(vegan_shop : Sell, product_info, cart):
     '''
     aggiunge al carrello della spesa un prodotto se disponibile
@@ -19,13 +19,18 @@ def _sell_product(vegan_shop : Sell, product_info, cart):
                         cart[product] = get_product.copy()
                     else:
                         cart[product]["quantity"] += quantity
-                print(cart)
+                    return "added"
             except ValueError as e:
                 print(e)
+                return "not added"
         else:
-            print( "Errore! Prodotto non presente in negozio!")  
+            print( "Mi dispiace! Il prodotto non è presente in negozio!")  
+    except EmptyShopException as e:
+        print(e)
+        return "void"
     except Exception as e:
         print(e)
+        return "not added"
     
 def get_product_info():
     '''
@@ -54,7 +59,9 @@ def add_product_to_store(vegan_shop : Stock):
     
     try:
         vegan_shop.add(product, quantity)
-    except Exception as e:
+    except ValueError as e:
+        print(e)
+    except ProductNotFoundException as e:
         try:
             buy_price = float(input("Prezzo di acquisto: "))
             sell_price = float(input("Prezzo di vendita: "))
@@ -63,7 +70,7 @@ def add_product_to_store(vegan_shop : Stock):
             print(error)
             return "Impossibile aggiungere il prodotto"
     
-    feedback_string = f"AGGIUNTO: {quantity} X {product}"        
+    feedback_string = f"AGGIUNTO: {quantity} X {product}\n"        
     return feedback_string
 
 def sell_products(cart : Sell): 
@@ -78,13 +85,15 @@ def sell_products(cart : Sell):
         if not product_info:
             print( "Impossibile inserire la quantità desiderata.")
         else:
-            _sell_product(cart, product_info, buy_list)
-
+           if _sell_product(cart, product_info, buy_list) == "void":
+            break
         buy_more = input("Aggiungere un altro prodotto ? (si/no) ")
         if buy_more.lower() == "si" or buy_more.lower() == "sì":
             continue
         else:
             break 
+    if len(buy_list) == 0:
+        return "\n" 
     return cart.get_bill(buy_list)
       
         

@@ -75,8 +75,8 @@ class VeganShop():
         '''
         store_content = self._show_store()
         if not store_content:
-            return "Negozio vuoto o inaccessibile."
-        return store_content    
+            return "Negozio vuoto o inaccessibile.\n"
+        return store_content + "\n"   
     
     def print_profits(self):
         '''
@@ -84,8 +84,8 @@ class VeganShop():
         '''
         market_dict = self._load()
         if len(market_dict) == 0:
-            print("Impossibile ottenere i profitti del negozio!")
+            print("Impossibile ottenere i profitti del negozio!\n")
             return
-        print(f"Profitto: lordo=€{market_dict['profits']['gross']:.2f} netto=€{market_dict['profits']['net']:.2f}")
+        print(f"Profitto: lordo=€{market_dict['profits']['gross']:.2f} netto=€{market_dict['profits']['net']:.2f}\n")
         return
        

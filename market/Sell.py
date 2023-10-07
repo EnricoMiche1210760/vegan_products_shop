@@ -1,5 +1,5 @@
 from .VeganShop import *
-from .exceptions import FatalErrorException
+from .exceptions import EmptyShopException
 
 class Sell(VeganShop):
     
@@ -50,11 +50,11 @@ class Sell(VeganShop):
         '''
         controlla se un prodotto è già presente in negozio
         product (str): prodotto da cercare
-        Se non riesce a caricare il dizionario con i prodotti genera FatalErrorException
+        Se non riesce a caricare il dizionario con i prodotti genera EmptyShopException
         '''
         self._market_dict = self._load_from_store()
-        if len(self._market_dict) == 0:
-            raise FatalErrorException(self._market_dict)
+        if len(self._market_dict) == 0 or len(self._market_dict["products"]) == 0:
+            raise EmptyShopException(self._market_dict)
         
         if product.lower() in self._market_dict["products"].keys():
             return True
@@ -64,17 +64,19 @@ class Sell(VeganShop):
         '''
         funzione che gestisce la vendita di un prodotto da negozio.
         Restituisce un dizionario contentente il prodotto richiesto, la quantità richiesta e il prezzo del singolo prodotto.
-        Se non riesce a caricare il dizionario con i prodotti genera FatalErrorException
+        Se non riesce a caricare il dizionario con i prodotti genera EmptyShopException
         product (str): prodotto da vendere
         quantity (int): quantità di prodotto da vendere
         '''
         self._market_dict = self._load_from_store()
        
-        if len(self._market_dict) == 0:
-            raise FatalErrorException(self._market_dict)
+        if len(self._market_dict) == 0 or len(self._market_dict["products"]) == 0:
+            raise EmptyShopException(self._market_dict)
         
-        assert type(quantity) is int, f"La quantità deve essere di tipo int. Ricevuto {type(quantity)}"
-        assert quantity >= 0, f"La quantità deve essere un numero negativo. Ricevuto quantity={quantity}"   
+        if type(quantity) is not int:
+            raise ValueError( f"La quantità deve essere di tipo int. Ricevuto {type(quantity)}")
+        if quantity < 0: 
+            raise ValueError(f"La quantità deve essere un numero negativo. Ricevuto quantity={quantity}")   
         
         self._load_profits_from_store()
             
@@ -98,13 +100,13 @@ class Sell(VeganShop):
     
     def get_bill(self, cart):
         '''
-        funzione che registra la vendita degli articoli e la stampa a video
+        registra la vendita degli articoli e la stampa a video
         cart (dict): carrello della spesa
         '''
         total = 0
         bill = "VENDITA REGISTRATA\n"
         for product in cart.keys():
-            bill += f"{cart[product]['quantity']} X {product}: €{cart[product]['sell']}\n"
+            bill += f"{cart[product]['quantity']} X {product}: €{cart[product]['sell']:.2f}\n"
             total += (cart[product]['sell']*cart[product]['quantity'])
-        bill += f"Totale: €{total:.2f}"
+        bill += f"Totale: €{total:.2f}\n"
         return bill

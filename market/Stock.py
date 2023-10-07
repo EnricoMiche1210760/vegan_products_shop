@@ -1,5 +1,5 @@
 from .VeganShop import *
-from .exceptions import FatalErrorException, ProductNotFoundException
+from .exceptions import EmptyShopException, ProductNotFoundException
 
 
 class Stock(VeganShop):   
@@ -25,7 +25,9 @@ class Stock(VeganShop):
         buy_price (float): prezzo di acquisto del prodotto
         sell_price (flaot): prezzo di vendita del prodotto
         '''
-        self._market_dict["products"][product] = {"quantity":quantity, "buy":buy_price, "sell":sell_price}
+        if buy_price < 0 or sell_price < 0:
+            raise ValueError("Digitato un prezzo errato!")
+        self._market_dict["products"][product] = {"quantity":quantity, "buy":round(buy_price, 2), "sell":round(sell_price, 2)}
         return [buy_price, sell_price]
         
     def add(self, product, quantity=1, buy_price=-1, sell_price=-1):
@@ -43,8 +45,10 @@ class Stock(VeganShop):
         if len(self._market_dict) == 0:
             self._market_dict = super()._create_store()
         
-        assert type(quantity) is int, f"La quantità deve essere di tipo int. Ricevuto {type(quantity)}"
-        assert quantity >= 0, f"La quantità deve essere un numero negativo. Ricevuto quantity={quantity}"        
+        if type(quantity) is not int:
+            raise ValueError( f"La quantità deve essere di tipo int. Ricevuto {type(quantity)}")
+        if quantity < 0: 
+            raise ValueError(f"La quantità deve essere un numero negativo. Ricevuto quantity={quantity}")        
         
         if product in self._market_dict["products"]:    
             self._market_dict["products"][product]["quantity"] += quantity
@@ -61,12 +65,12 @@ class Stock(VeganShop):
     def is_in_store(self, product):
         '''
         controlla se un prodotto è già presente in negozio.
-        Se non riesce a caricare il dizionario con i prodotti genera FatalErrorException
+        Se non riesce a caricare il dizionario con i prodotti genera EmptyShopException
         product (str): prodotto da cercare
         '''
         self._market_dict = self._load_from_store()
-        if len(self._market_dict) == 0:
-            raise FatalErrorException(self._market_dict)
+        if len(self._market_dict) == 0 or len(self._market_dict["products"]) == 0:
+            raise EmptyShopException(self._market_dict)
         
         if product.lower() in self._market_dict["products"].keys():
             return True
