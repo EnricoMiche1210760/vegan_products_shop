@@ -108,7 +108,7 @@ class Sell(VeganShop):
         total = 0
         bill = "VENDITA REGISTRATA\n"
         for product in cart.keys():
-            bill += f"{cart[product]['quantity']} X {product}: €{cart[product]['sell']:.2f}\n"
+            bill += f" - {cart[product]['quantity']} X {product}: €{cart[product]['sell']:.2f}\n"
             total += (cart[product]['sell']*cart[product]['quantity'])
         bill += f"Totale: €{total:.2f}\n"
         return bill

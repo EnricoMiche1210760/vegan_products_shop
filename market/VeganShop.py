@@ -76,7 +76,7 @@ class VeganShop():
         store_content = self._show_store()
         if not store_content:
             return "Negozio vuoto o inaccessibile.\n"
-        return store_content + "\n"   
+        return store_content   
     
     def print_profits(self):
         '''
