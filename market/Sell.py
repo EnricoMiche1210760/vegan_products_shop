@@ -5,7 +5,7 @@ class Sell(VeganShop):
     
     def __init__(self, market):
         '''
-        market (str): file json contenente tutti i prodotti presenti nel market
+        market (str): file json containing all product available in the shop
         '''
         super().__init__(market)
         self._market_dict = {}
@@ -14,28 +14,28 @@ class Sell(VeganShop):
         
     def _load_from_store(self):
         '''
-        ottiene il dizionario dal file json passato come parametro in __init__
+        Load the dictionary from json file passed as parameter in __init__
         '''
         return super()._load(self._market_dict)
     
     def _save_store(self):
         '''
-        salva il dizionario nel file json passato come parametro in __init__
+        Save the dictionary from json file passed as parameter in __init__
         '''
         super()._save_store(self._market_dict)        
     
     def _load_profits_from_store(self):
         '''
-        carica i profitti (lordo e netto)
+        Load profits (gross and net)
         '''
         self._gross_profit = self._market_dict["profits"]["gross"] 
         self._net_profit = self._market_dict["profits"]["net"]
     
     def _update_profits(self, product, sell_quantity):
         '''
-        aggiorna i profitti (lordo e netto) dopo una vendita
-        product (str): prodotto venduto
-        sell_quantity (int): quantità venduta di prodotto 
+        Update profits (gross and net) after a sell
+        product (str): sold product
+        sell_quantity (int): product sold quantity  
         '''
         sell_price = self._market_dict["products"][product]["sell"]*sell_quantity
         buy_price = self._market_dict["products"][product]["buy"]*sell_quantity
@@ -48,9 +48,9 @@ class Sell(VeganShop):
         
     def is_in_store(self, product):
         '''
-        controlla se un prodotto è già presente in negozio
-        product (str): prodotto da cercare
-        Se non riesce a caricare il dizionario con i prodotti genera EmptyShopException
+        Check if a product is already in store.
+        If dictionary is empty or without products raise: EmptyShopException
+        product (str): product to be found
         '''
         self._market_dict = self._load_from_store()
         if len(self._market_dict) == 0 or len(self._market_dict["products"]) == 0:
@@ -62,11 +62,11 @@ class Sell(VeganShop):
     
     def get(self, product, quantity):
         '''
-        funzione che gestisce la vendita di un prodotto da negozio.
-        Restituisce un dizionario contentente il prodotto richiesto, la quantità richiesta e il prezzo del singolo prodotto.
-        Se non riesce a caricare il dizionario con i prodotti genera EmptyShopException
-        product (str): prodotto da vendere
-        quantity (int): quantità di prodotto da vendere
+        Manage the sell of a product from the store.
+        Return a dictionary containing the required product, with the required quantity and the price of the single product.
+        If products cannot be loaded from dict, raise EmptyShopException
+        product (str): product to be sold
+        quantity (int): quantity of product to be sold
         '''
         self._market_dict = self._load_from_store()
        
@@ -102,8 +102,8 @@ class Sell(VeganShop):
     
     def get_bill(self, cart):
         '''
-        registra la vendita degli articoli e la stampa a video
-        cart (dict): carrello della spesa
+        Records the sell of some products and print to the shell
+        cart (dict): shopping cart
         '''
         total = 0
         bill = "VENDITA REGISTRATA\n"

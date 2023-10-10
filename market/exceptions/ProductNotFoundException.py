@@ -1,9 +1,9 @@
 class ProductNotFoundException(Exception):
     '''
-    Eccezione generata quando inserisco un nuovo prodotto nel dizionario senza specificarne il prezzo
-    product (str): prodotto che ha causato l'eccezione
-    dict_var (dict): dizionario
-    message (str): spiegazione dell'errore
+    Exception raised when inserting a new product in the dictionary, you don't specify the product price
+    product (str): product raising the exception
+    dict_var (dict): dictionary
+    message (str): error message
     '''
     def __init__(self, product, dict_var, message="Un nuovo prodotto richiede di specificare il prezzo di vendita e di acquisto"):
         self.product = product

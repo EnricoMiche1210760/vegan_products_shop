@@ -3,12 +3,12 @@ from manage_products import add_product_to_store, sell_products
 
 HELPER_STR="""
 I comandi disponibili sono i seguenti:
-aggiungi: aggiungi un prodotto al negozio
-elenca: elenca i prodotto in negozio
-vendita: registra una vendita effettuata
-profitti: mostra i profitti totali
-aiuto: mostra i possibili comandi
-chiudi: esci dal programma
+- aggiungi: aggiungi un prodotto al negozio
+- elenca: elenca i prodotto in negozio
+- vendita: registra una vendita effettuata
+- profitti: mostra i profitti totali
+- aiuto: mostra i possibili comandi
+- chiudi: esci dal programma
 """
 
 #help(Sell)

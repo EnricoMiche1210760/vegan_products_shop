@@ -4,14 +4,14 @@ from os import path
 class VeganShop():
     def __init__(self, market):
         '''
-        market (str): file json contenente tutti i prodotti presenti nel market
+        market (str): file json containing all product available in the shop
         '''
         self._market = market
         assert path.splitext(self._market)[-1] == ".json", "Tipo di file non supportato. Utilizzare un file json"
         
     def _create_store(self):
         '''
-        crea il file che deve contenere i dati del negozio
+        Create the file which has to contain store data
         '''
         market_dict = {"products": {}, 
                         "profits":{
@@ -25,15 +25,15 @@ class VeganShop():
     
     def _save_store(self, market_dict):
         '''
-        salva il file con i dati del negozio
-        market_dict (dict); dizionario con i dati del negozio
+        Save file with store content.
+        market_dict (dict); dictionary with store data
         '''
         with open(self._market, "w", encoding='utf-8') as mrkt:
                 json.dump(market_dict, mrkt, indent=6)
         
     def _is_store_available(self):
         '''
-        controlla se il file con i dati del negozio esiste
+        Check if store data file exists
         '''
         if path.isfile(self._market):
             return True
@@ -41,8 +41,8 @@ class VeganShop():
     
     def _load(self, market_dict={}):
         '''
-        carica i dati di negozio dal file e li restituisce in un dizionario
-        market_dict (dict): dizionario
+        Load shop data from file and return a dictionary with the content
+        market_dict (dict): dictionary
         '''
         if not self._is_store_available():
             return {}
@@ -53,25 +53,25 @@ class VeganShop():
     
     def _show_store(self):
         '''
-        mostra il contenuto del negozio
+        Show store content
         '''
         if not self._is_store_available():
             print("Il contenuto del negozio non è attualmente disponibile")
             return None
         
-        products_table_info = "{:<20} {:<15} {:<15}\n".format("Prodotto","Quantità","Prezzo")
+        products_table_info = "PRODOTTO\tQUANTITA'\tPREZZO\n"
         
         market_dict = self._load()
         for product in market_dict["products"]:
             quantity = market_dict["products"][product]["quantity"]
             sell_price = market_dict["products"][product]["sell"]           
-            products_table_info += "{:<20} {:<15} €{:<15.2f}\n".format(product, quantity, sell_price)
+            products_table_info += f"{product}\t{quantity}\t€{sell_price:.2f}\n"
             
         return products_table_info 
        
     def __repr__(self):
         '''
-        stampa i dati contenuti nel file json del negozio
+        Print json shop data content
         '''
         store_content = self._show_store()
         if not store_content:
@@ -80,7 +80,7 @@ class VeganShop():
     
     def print_profits(self):
         '''
-        stampa i profitti del negozio
+        Print shop profits
         '''
         market_dict = self._load()
         if len(market_dict) == 0:

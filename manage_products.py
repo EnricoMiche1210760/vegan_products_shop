@@ -2,10 +2,10 @@ from market import Stock, Sell
 from market.exceptions import ProductNotFoundException, EmptyShopException
 def _sell_product(vegan_shop : Sell, product_info, cart):
     '''
-    aggiunge al carrello della spesa un prodotto se disponibile
-    vegan_shop (Sell): oggetto della classe Sell contentente i prodotti disponibili in negozio
-    product_info (list): lista composta da prodotto e quantità richiesti
-    cart (dict): dizionario contentente i prodotti da vendere
+    Add to shopping cart a product if available.
+    vegan_shop (Sell): Sell object containing the products available
+    product_info (list): list with product name and quantity required
+    cart (dict): dictionary continaing products to be sold
     '''
     product = product_info[0]
     quantity = product_info[1]
@@ -32,28 +32,33 @@ def _sell_product(vegan_shop : Sell, product_info, cart):
         return "not added"
     return "not added"
     
-def get_product_info():
+def get_product_info(product=""):
     '''
-    richiede prodotto e quantità tramite shell
+    Get product and quantity from shell
     '''
-    product = input("Nome del prodotto: ")
+    #feedback "quantity"
+    if not product:
+        product = input("Nome del prodotto: ")
     try:
         quantity = int(input("Quantità: "))
+        if quantity < 0:
+            raise ValueError()
     except ValueError as e:
-        print(e)
-        return None
+        print("La quantità deve essere un numero intero maggiore di zero")
+        return [product, None]
     return [product, quantity]
 
 
 def add_product_to_store(vegan_shop : Stock):
     '''
-    aggiunge al magazzino del negozio i prodotti passati come input da shell e
-    restituisce un feedback sulla riuscita dell'operazione
-    vegan_shop (Stock): stock di un negozio
+    Add to store products passed by input from shell ad return a feedback
+    whether the operation was successfully or not
+    vegan_shop (Stock): stock of the vegan shop
     '''
     product_info = get_product_info()
-    if not product_info:
-        return "Impossibile inserire la quantità desiderata."
+    while not product_info[1]:
+        #print( "Impossibile inserire la quantità desiderata.")
+        product_info = get_product_info(product_info[0])
     product = product_info[0]
     quantity = product_info[1]
     
@@ -75,17 +80,17 @@ def add_product_to_store(vegan_shop : Stock):
 
 def sell_products(cart : Sell): 
     '''
-    aggiunge al carrello i prodotti passati come input da shell e
-    restituisce la fattura
-    cart (Sell): carrello della spesa
+    Add to cart products passed by input from shell ad return the bill
+    cart (Sell): shopping cart
     '''
     buy_list = {}
     while 1:
         product_info = get_product_info()
-        if not product_info:
-            print( "Impossibile inserire la quantità desiderata.")
-        else:
-           if _sell_product(cart, product_info, buy_list) == "void":
+        #feedback "quantity"
+        while not product_info[1]:
+            #print( "Impossibile inserire la quantità desiderata.")
+            product_info = get_product_info(product_info[0])
+        if _sell_product(cart, product_info, buy_list) == "void":
             break
         buy_more = input("Aggiungere un altro prodotto ? (si/no) ")
         if buy_more.lower() == "si" or buy_more.lower() == "sì":

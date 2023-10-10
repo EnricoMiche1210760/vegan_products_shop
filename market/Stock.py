@@ -6,24 +6,24 @@ class Stock(VeganShop):
     
     def __init__(self, market):
         '''
-        market (str): file json contenente tutti i prodotti presenti nel market
+        market (str): file json containing all product available in the shop
         '''
         super().__init__(market)
         self._market_dict = {}
            
     def _load_from_store(self):
         '''
-        ottiene il dizionario dal file json passato come parametro in __init__
+        Load the dictionary from json file passed as parameter in __init__
         '''
         return super()._load(self._market_dict)
     
     def _add_new_product(self, product, quantity, buy_price, sell_price):
         '''
-        aggiunge in negozio un nuovo prodotto, con quantità, prezzo di acquisto e di vendita
-        product (str): prodotto da aggiungere al negozio
-        quantity (int): quantità di prodotto 
-        buy_price (float): prezzo di acquisto del prodotto
-        sell_price (flaot): prezzo di vendita del prodotto
+        Add a new product in the store, with quantity, buy price and sell price
+        product (str): product to be added in the store
+        quantity (int): quantity of product
+        buy_price (float): product buy price
+        sell_price (flaot):  product sell price
         '''
         if buy_price < 0 or sell_price < 0:
             raise ValueError("Digitato un prezzo errato!")
@@ -32,14 +32,14 @@ class Stock(VeganShop):
         self._market_dict["products"][product] = {"quantity":quantity, "buy":round(buy_price, 2), "sell":round(sell_price, 2)}
         return [buy_price, sell_price]
         
-    def add(self, product, quantity=1, buy_price=-1, sell_price=-1):
+    def add(self, product, quantity=1, buy_price=None, sell_price=None):
         '''
-        aggiorna la quantità del prodotto in negozio. Se il prodotto non è presente e il prezzo non è specificato 
-        produce l'eccezione: ProductNotFoundException
-        product (str): prodotto da aggiungere al negozio
-        quantity (int): quantità di prodotto 
-        buy_price (float): prezzo di acquisto del prodotto
-        sell_price (flaot): prezzo di vendita del prodotto
+        Update product quantity on the store. If a new product is inserted and price is not given 
+        raise: ProductNotFoundException
+        product (str): product to be added in the store
+        quantity (int): quantity of product
+        buy_price (float): product buy price
+        sell_price (flaot):  product sell price
         '''
         product = product.lower()
         self._market_dict = self._load_from_store()    
@@ -55,7 +55,7 @@ class Stock(VeganShop):
         if product in self._market_dict["products"]:    
             self._market_dict["products"][product]["quantity"] += quantity
             
-        elif buy_price == -1 and sell_price == -1:
+        elif not buy_price or not sell_price:
             raise ProductNotFoundException(product, self._market_dict)
         else: 
             self._add_new_product(product, quantity, buy_price, sell_price)
@@ -66,9 +66,9 @@ class Stock(VeganShop):
     
     def is_in_store(self, product):
         '''
-        controlla se un prodotto è già presente in negozio.
-        Se non riesce a caricare il dizionario con i prodotti genera EmptyShopException
-        product (str): prodotto da cercare
+        Check if a product is already in store.
+        If dictionary is empty or without products raise: EmptyShopException
+        product (str): product to be found
         '''
         self._market_dict = self._load_from_store()
         if len(self._market_dict) == 0 or len(self._market_dict["products"]) == 0:
