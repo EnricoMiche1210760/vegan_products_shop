@@ -1,6 +1,6 @@
 class ProductNotFoundException(Exception):
     '''
-    Exception raised when inserting a new product in the dictionary, you don't specify the product price
+    Exception raised when inserting a new product in the dictionar the product price is not specified
     product (str): product raising the exception
     dict_var (dict): dictionary
     message (str): error message

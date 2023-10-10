@@ -57,7 +57,6 @@ def add_product_to_store(vegan_shop : Stock):
     '''
     product_info = get_product_info()
     while not product_info[1]:
-        #print( "Impossibile inserire la quantità desiderata.")
         product_info = get_product_info(product_info[0])
     product = product_info[0]
     quantity = product_info[1]
@@ -92,7 +91,6 @@ def sell_products(cart : Sell):
         product_info = get_product_info()
         #feedback "quantity"
         while not product_info[1]:
-            #print( "Impossibile inserire la quantità desiderata.")
             product_info = get_product_info(product_info[0])
         if _sell_product(cart, product_info, buy_list) == "void":
             break

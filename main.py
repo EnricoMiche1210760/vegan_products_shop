@@ -1,8 +1,7 @@
 from market import Stock, Sell, VeganShop
 from manage_products import add_product_to_store, sell_products
 
-HELPER_STR="""
-I comandi disponibili sono i seguenti:
+HELPER_STR="""I comandi disponibili sono i seguenti:
 - aggiungi: aggiungi un prodotto al negozio
 - elenca: elenca i prodotto in negozio
 - vendita: registra una vendita effettuata
@@ -42,5 +41,5 @@ if __name__ == "__main__":
             print("Bye bye")
             break
         else:
-            print(f"Comando non valido{HELPER_STR}")
+            print(f"Comando non valido\n{HELPER_STR}")
             
