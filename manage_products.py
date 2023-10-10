@@ -70,6 +70,10 @@ def add_product_to_store(vegan_shop : Stock):
         try:
             buy_price = float(input("Prezzo di acquisto: "))
             sell_price = float(input("Prezzo di vendita: "))
+        except ValueError as error:
+            print("Prezzo mancante o errato!")
+            return "Impossibile aggiungere il prodotto"
+        try:
             vegan_shop.add(product, quantity, buy_price, sell_price)
         except ValueError as error:
             print(error)

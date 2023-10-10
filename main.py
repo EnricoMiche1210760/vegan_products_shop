@@ -42,5 +42,5 @@ if __name__ == "__main__":
             print("Bye bye")
             break
         else:
-            print(f"Comando non valido\n{HELPER_STR}")
+            print(f"Comando non valido{HELPER_STR}")
             
